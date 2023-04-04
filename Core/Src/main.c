@@ -32,7 +32,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#define ARM_CM_DEMCR (*(uint32_t*)0xE000EDFC)
+#define ARM_CM_DWT_CTRL (*(uint32_t*)0xE0001000)
+#define ARM_CM_DWT_CYCCNT (*(uint32_t*)0xE0001004)
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -78,7 +80,12 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  if (ARM_CM_DWT_CTRL !=0) {
+	  ARM_CM_DEMCR |= 1<<24;
+	  ARM_CM_DWT_CYCCNT=0;
+	  ARM_CM_DWT_CTRL |= 1<<0;
 
+}
   /* USER CODE END Init */
 
   /* Configure the system clock */
